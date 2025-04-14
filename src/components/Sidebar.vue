@@ -6,22 +6,14 @@
         <button class="btn-close btn-close-white" @click="$emit('close')"></button>
       </div>
       <nav class="sidebar-nav">
-        <a href="#hero" class="nav-item" @click="$emit('close')">
+        <RouterLink to="/home" class="nav-item" @click="$emit('close')">
           <i class="bi bi-house-door"></i>
           <span>Home</span>
-        </a>
-        <a href="#skills" class="nav-item" @click="$emit('close')">
-          <i class="bi bi-code-slash"></i>
-          <span>Skills</span>
-        </a>
-        <a href="#experience" class="nav-item" @click="$emit('close')">
+        </RouterLink>
+        <RouterLink to="/work" class="nav-item" @click="$emit('close')">
           <i class="bi bi-briefcase"></i>
-          <span>Experience</span>
-        </a>
-        <a href="#contact" class="nav-item" @click="$emit('close')">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
+          <span>Work</span>
+        </RouterLink>
       </nav>
       <div class="sidebar-footer">
         <div class="social-links">
@@ -31,9 +23,6 @@
           <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">
             <i class="bi bi-linkedin"></i>
           </a>
-          <a href="https://twitter.com/yourusername" target="_blank" class="social-link">
-            <i class="bi bi-twitter"></i>
-          </a>
         </div>
       </div>
     </div>
@@ -42,6 +31,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import { RouterLink } from 'vue-router'
 
 defineProps<{
   isOpen: boolean
@@ -98,7 +88,6 @@ defineEmits<{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  flex: 1;
 }
 
 .nav-item {
@@ -106,7 +95,7 @@ defineEmits<{
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #fff;
   text-decoration: none;
   border-radius: 0.5rem;
   transition: all 0.3s ease;
@@ -114,8 +103,6 @@ defineEmits<{
 
 .nav-item:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  transform: translateX(5px);
 }
 
 .nav-item i {
@@ -125,46 +112,22 @@ defineEmits<{
 .sidebar-footer {
   margin-top: auto;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .social-links {
   display: flex;
+  gap: 1rem;
   justify-content: center;
-  gap: 1.5rem;
 }
 
 .social-link {
-  color: rgba(255, 255, 255, 0.7);
+  color: #fff;
   font-size: 1.5rem;
   transition: all 0.3s ease;
 }
 
 .social-link:hover {
-  color: #fff;
-  transform: translateY(-3px);
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100vw;
-    transform: translateX(-100%);
-  }
-
-  .sidebar-open {
-    transform: translateX(0);
-  }
-
-  .sidebar-content {
-    padding: 1rem;
-  }
-
-  .nav-item {
-    padding: 1rem;
-  }
-
-  .social-links {
-    gap: 2rem;
-  }
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 </style>

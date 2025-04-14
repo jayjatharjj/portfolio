@@ -1,15 +1,5 @@
 <template>
-  <div class="work-experience-container">
-    <!-- Navigation Buttons -->
-    <div class="navigation-buttons">
-      <button class="home-button" @click="$emit('close')">
-        <i class="bi bi-house-fill"></i>
-      </button>
-      <button class="close-button" @click="$emit('close')">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
-
+  <div class="work-experience-container" :class="{ 'sidebar-open': isSidebarOpen }">
     <!-- Header Section -->
     <div class="header-section text-center py-4">
       <h1 class="display-4 fw-bold text-white mb-3">Work Experience</h1>
@@ -63,7 +53,7 @@
                 <h2 class="project-title">Smart360</h2>
                 <div class="company-info mb-3">
                   <h3 class="h5">TwoDots Software Services</h3>
-                  <p class="text-muted small">October 2023 – Present</p>
+                  <p class="text-muted small" style="color: rgba(255, 255, 255, 0.7)">October 2023 – Present</p>
                 </div>
                 <div class="tech-stack mb-3">
                   <span class="badge bg-primary me-2">Java</span>
@@ -97,7 +87,7 @@
                 <h2 class="project-title">ScheduleMyEmails</h2>
                 <div class="company-info mb-3">
                   <h3 class="h5">TwoDots Software Services</h3>
-                  <p class="text-muted small">October 2023 – Present</p>
+                  <p class="text-muted small" style="color: rgba(255, 255, 255, 0.7)">October 2023 – Present</p>
                 </div>
                 <div class="tech-stack mb-3">
                   <span class="badge bg-primary me-2">Brevo</span>
@@ -205,7 +195,7 @@
                 <h2 class="project-title">TraceFlow</h2>
                 <div class="company-info mb-3">
                   <h3 class="h5">TwoDots Software Services</h3>
-                  <p class="text-muted small">October 2023 – Present</p>
+                  <p class="text-muted small" style="color: rgba(255, 255, 255, 0.7)">October 2023 – Present</p>
                 </div>
                 <div class="tech-stack mb-3">
                   <span class="badge bg-primary me-2">Spring Boot</span>
@@ -234,13 +224,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay as SwiperAutoplay, EffectCreative as SwiperEffectCreative } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-creative'
 
-defineEmits(['close'])
+defineProps<{
+  isSidebarOpen: boolean
+}>()
 
 // Project data
 const smart360Achievements = [
@@ -295,45 +287,16 @@ const traceflowImages = [
 
 <style scoped>
 .work-experience-container {
-  min-width: 100vw;
-  color: #fff;
-  padding: 1rem 0;
-  position: relative;
-}
-
-.navigation-buttons {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 1000;
-}
-
-.home-button,
-.close-button {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  padding: 2rem 0;
   transition: all 0.3s ease;
 }
 
-.home-button:hover,
-.close-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
+.work-experience-container.sidebar-open {
+  max-width: 90vw;
 }
 
 .header-section {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .project-blocks {
@@ -372,6 +335,7 @@ const traceflowImages = [
 .company-info h3 {
   font-size: 1.25rem;
   margin-bottom: 0.25rem;
+  color: #ffffff;
 }
 
 .tech-stack .badge {
@@ -383,6 +347,7 @@ const traceflowImages = [
 .achievements {
   flex-grow: 1;
   overflow-y: auto;
+  color: #ffffff;
 }
 
 .achievements li {
@@ -455,10 +420,13 @@ const traceflowImages = [
 }
 
 @media (max-width: 768px) {
-  .navigation-buttons {
-    top: 10px;
-    left: 10px;
-    right: 10px;
+  .work-experience-container {
+    padding: 1rem;
+  }
+
+  .work-experience-container.sidebar-open {
+    max-width: 100%;
+    margin-left: 0;
   }
 
   .project-blocks {
@@ -482,5 +450,13 @@ const traceflowImages = [
   .swiper-container {
     height: 350px;
   }
+}
+
+.company-info p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 </style>

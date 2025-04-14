@@ -1,7 +1,7 @@
 <template>
   <div
     class="portfolio-container position-relative"
-    :class="{ 'sidebar-open': isSidebarOpen, 'show-work-experience': showWorkExperience }"
+    :class="{ 'sidebar-open': isSidebarOpen }"
   >
     <!-- Sidebar Toggle Button -->
     <button class="sidebar-toggle" @click="toggleSidebar">
@@ -18,25 +18,17 @@
     ></div>
 
     <!-- Main Content -->
-    <div v-if="!showWorkExperience" class="main-content">
-      <HeroSection />
-      <SkillsSection />
-      <ExperienceSection @show-full-experience="showWorkExperience = true" />
+    <div class="main-content">
+      <RouterView :is-sidebar-open="isSidebarOpen"></RouterView>
     </div>
-
-    <!-- Work Experience -->
-    <WorkExperience v-if="showWorkExperience" @close="showWorkExperience = false" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import Sidebar from './Sidebar.vue'
-import HeroSection from './HeroSection.vue'
-import SkillsSection from './SkillsSection.vue'
-import ExperienceSection from './ExperienceSection.vue'
-import WorkExperience from './WorkExperience.vue'
+import Sidebar from '../components/Sidebar.vue'
+import { RouterView } from 'vue-router'
 
 const isSidebarOpen = ref(false)
 const threeContainer = ref<HTMLElement | null>(null)
@@ -44,22 +36,6 @@ let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
 let renderer: THREE.WebGLRenderer
 let particles: THREE.Points
-let scrollY = ref(0)
-let lastScrollY = 0
-let scrollDirection = 1
-const showWorkExperience = ref(false)
-
-const handleScroll = () => {
-  lastScrollY = scrollY.value
-  scrollY.value = window.scrollY
-  scrollDirection = scrollY.value > lastScrollY ? 1 : -1
-
-  // Update particle animation based on scroll
-  if (particles) {
-    particles.rotation.x += scrollDirection * 0.0001
-    particles.rotation.y += scrollDirection * 0.0001
-  }
-}
 
 const initThreeJS = () => {
   if (!threeContainer.value) return
@@ -116,11 +92,13 @@ const toggleSidebar = () => {
 
 onMounted(() => {
   initThreeJS()
-  window.addEventListener('scroll', handleScroll)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  // Clean up Three.js resources
+  if (renderer) {
+    renderer.dispose()
+  }
 })
 </script>
 
@@ -139,11 +117,6 @@ onUnmounted(() => {
   margin-left: 300px;
 }
 
-.portfolio-container.show-work-experience {
-  width: 100vw;
-  margin: 0;
-}
-
 @media (max-width: 768px) {
   .portfolio-container {
     width: 100%;
@@ -154,11 +127,6 @@ onUnmounted(() => {
     width: 100%;
     margin-left: 0;
     overflow: hidden;
-  }
-
-  .portfolio-container.show-work-experience {
-    width: 100%;
-    padding: 0;
   }
 }
 
@@ -189,10 +157,6 @@ onUnmounted(() => {
   display: none;
 }
 
-.portfolio-container.show-work-experience .sidebar-toggle {
-  display: none;
-}
-
 .sidebar-toggle:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
@@ -213,9 +177,5 @@ onUnmounted(() => {
 
 .main-content {
   transition: opacity 0.3s ease;
-}
-
-.portfolio-container.show-work-experience .main-content {
-  display: none;
 }
 </style>

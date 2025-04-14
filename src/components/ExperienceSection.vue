@@ -26,9 +26,9 @@
                   <i class="bi bi-check-circle-fill text-primary me-2"></i>{{ achievement }}
                 </li>
               </ul>
-              <button @click="showFullExperience" class="btn btn-outline-primary mt-3">
+              <RouterLink to="/work" class="btn btn-outline-primary mt-3">
                 View Full Experience <i class="bi bi-arrow-right ms-2"></i>
-              </button>
+              </RouterLink>
             </div>
           </div>
         </div>
@@ -56,10 +56,6 @@ const experience = [
     ],
   },
 ]
-
-const showFullExperience = () => {
-  emit('showFullExperience')
-}
 
 onMounted(() => {
   // Experience section animations
