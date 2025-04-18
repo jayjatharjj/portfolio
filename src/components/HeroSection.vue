@@ -19,10 +19,10 @@
               that make a difference.
             </p>
             <div class="d-flex gap-3 animate-buttons">
-              <a href="#contact" class="btn btn-primary btn-lg hover-effect">
+              <button @click="handleGetInTouch" class="btn btn-primary btn-lg hover-effect text-dark">
                 <span>Get in Touch</span>
                 <!-- <i class="bi bi-arrow-right ms-2"></i> -->
-              </a>
+              </button>
               <button class="btn btn-outline-light btn-lg hover-effect" @click="openResumeModal">
                 <span>View My Resume</span>
                 <!-- <i class="bi bi-arrow-right ms-2"></i> -->
@@ -41,7 +41,8 @@
                     class="tech-item d-flex flex-column align-items-center p-3 bg-dark bg-opacity-50 rounded-3 border border-light border-opacity-25"
                     :style="{ '--delay': index * 0.1 + 's' }"
                   >
-                    <i :class="tech.icon + ' text-primary mb-2 fs-3'"></i>
+                    <i v-if="!tech.isImage" :class="tech.icon + ' text-primary mb-2 fs-3'"></i>
+                    <img v-else :src="tech.icon" :alt="tech.name" class="tech-icon mb-2" />
                     <span class="text-white fs-5">{{ tech.name }}</span>
                   </div>
                 </div>
@@ -54,6 +55,7 @@
 
     <!-- Resume Modal -->
     <ResumeModal :is-open="isResumeModalOpen" @close="closeResumeModal" />
+    <ContactForm ref="contactFormRef" />
   </section>
 </template>
 
@@ -61,8 +63,10 @@
 import { ref, onMounted } from 'vue'
 import gsap from 'gsap'
 import ResumeModal from './ResumeModal.vue'
+import ContactForm from './ContactForm.vue'
 
 const isResumeModalOpen = ref(false)
+const contactFormRef = ref()
 
 const openResumeModal = () => {
   isResumeModalOpen.value = true
@@ -72,13 +76,17 @@ const closeResumeModal = () => {
   isResumeModalOpen.value = false
 }
 
+const handleGetInTouch = () => {
+  contactFormRef.value.showForm = true
+}
+
 const techStack = [
-  { name: 'Java', icon: 'bi bi-filetype-java' },
-  { name: 'Spring Boot', icon: 'fa fa-leaf' },
-  { name: 'Vue.js', icon: 'fab fa-vuejs' },
-  { name: 'TypeScript', icon: 'bi bi-filetype-tsx' },
-  { name: 'Jenkins', icon: 'bi bi-gear' },
-  { name: 'AWS', icon: 'bi bi-cloud' },
+  { name: 'Java', icon: 'https://img.icons8.com/color/48/java-coffee-cup-logo--v1.png', isImage: true },
+  { name: 'Spring Boot', icon: 'https://img.icons8.com/color/48/spring-logo.png', isImage: true },
+  { name: 'Vue.js', icon: 'https://img.icons8.com/color/48/vue-js.png', isImage: true },
+  { name: 'TypeScript', icon: 'https://img.icons8.com/fluency/48/typescript--v1.png', isImage: true },
+  { name: 'Jenkins', icon: 'https://img.icons8.com/color/48/jenkins.png', isImage: true },
+  { name: 'GCP', icon: 'https://img.icons8.com/color/48/google-cloud.png', isImage: true },
 ]
 
 onMounted(() => {
@@ -119,7 +127,7 @@ onMounted(() => {
 
 <style scoped>
 .text-gradient {
-  background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  background: linear-gradient(90deg, #92EFFD 0%, #4E65FF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -170,7 +178,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  background: linear-gradient(90deg, #4E65FF 0%, #92EFFD 100%);
   border: none;
 }
 
@@ -204,5 +212,11 @@ onMounted(() => {
 .hero-section.modal-open {
   filter: blur(5px);
   pointer-events: none;
+}
+
+.tech-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 </style>

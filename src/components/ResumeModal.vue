@@ -45,7 +45,7 @@
           <p class="text-success mb-3">
             <i class="bi bi-check-circle-fill me-2"></i>Email validated successfully!
           </p>
-          <a :href="resumeUrl" download class="btn btn-primary">
+          <a :href="resumeUrl" download class="btn btn-primary" @click="recordDownload">
             <i class="bi bi-download me-2"></i>Download Resume
           </a>
         </div>
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue'
-
+import VisitorService from '@/services/VisitorService'
 const props = defineProps<{
   isOpen: boolean
 }>()
@@ -95,6 +95,10 @@ const closeModal = () => {
   email.value = ''
   emailError.value = ''
   isEmailValidated.value = false
+}
+
+const recordDownload = () => {
+  VisitorService.recordDownload(email.value)
 }
 </script>
 

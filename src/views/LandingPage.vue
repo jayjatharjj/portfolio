@@ -8,6 +8,10 @@
       <i class="bi bi-list"></i>
     </button>
 
+    <button v-if="isWorkExperienceRoute" class="home-toggle" @click="$router.push('/')">
+      <i class="bi bi-house"></i>
+    </button>
+
     <!-- Sidebar Component -->
     <Sidebar :is-open="isSidebarOpen" @close="toggleSidebar" />
 
@@ -21,21 +25,27 @@
     <div class="main-content">
       <RouterView :is-sidebar-open="isSidebarOpen"></RouterView>
     </div>
+
+    <EmailPopup ref="contactFormRef" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import * as THREE from 'three'
 import Sidebar from '../components/Sidebar.vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
+import EmailPopup from '@/components/EmailPopup.vue'
 
+const route = useRoute()
 const isSidebarOpen = ref(false)
 const threeContainer = ref<HTMLElement | null>(null)
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
 let renderer: THREE.WebGLRenderer
 let particles: THREE.Points
+
+const isWorkExperienceRoute = computed(() => route.path === '/work')
 
 const initThreeJS = () => {
   if (!threeContainer.value) return
@@ -88,6 +98,12 @@ const initThreeJS = () => {
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
+}
+
+const contactFormRef = ref()
+
+const handleGetInTouch = () => {
+  contactFormRef.value.showForm = true
 }
 
 onMounted(() => {
@@ -177,5 +193,44 @@ onUnmounted(() => {
 
 .main-content {
   transition: opacity 0.3s ease;
+}
+
+.home-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  margin-top: 60px;
+}
+
+.home-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.home-toggle i {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .home-toggle {
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    margin-top: 50px;
+  }
 }
 </style>

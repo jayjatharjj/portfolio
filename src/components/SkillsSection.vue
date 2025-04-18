@@ -36,7 +36,7 @@ const skills = [
     title: 'Backend Development',
     icon: 'bi bi-server display-4 text-primary mb-3',
     description: 'Building robust and scalable server-side applications',
-    technologies: ['Java', 'Spring Boot', 'Scala', 'REST APIs']
+    technologies: ['Java', 'Spring Boot', 'REST APIs']
   },
   {
     title: 'Frontend Development',
@@ -86,7 +86,7 @@ onMounted(() => {
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  background: linear-gradient(90deg, #4E65FF 0%, #92EFFD 100%);
 }
 
 .skill-card {
@@ -131,10 +131,15 @@ onMounted(() => {
 .tech-tag {
   transition: all 0.2s ease;
   transform: translateZ(0);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  margin: 0.3rem;
 }
 
 .tech-tag:hover {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {

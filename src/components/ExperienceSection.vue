@@ -91,7 +91,7 @@ onMounted(() => {
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  background: linear-gradient(90deg, #4E65FF 0%, #92EFFD 100%);
 }
 
 .timeline-item {

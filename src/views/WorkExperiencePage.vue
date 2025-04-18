@@ -459,4 +459,41 @@ const traceflowImages = [
 .text-muted {
   color: rgba(255, 255, 255, 0.7) !important;
 }
+
+.back-home-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-home-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+}
+
+.back-home-btn i {
+  transition: transform 0.3s ease;
+}
+
+.back-home-btn:hover i {
+  transform: translateX(-3px);
+}
+
+@media (max-width: 768px) {
+  .back-home-btn {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
 </style>
